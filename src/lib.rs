@@ -54,7 +54,6 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
     f.read_to_string(&mut contents)?;
 
     for line in search(&config.query, &contents) {
-        println!("{:?}", line.1);
         let v: Vec<&str> = line.1.split(&config.query).collect();
         print!("{0}:  ", line.0.to_string().trim().green());
         for word in v {
