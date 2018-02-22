@@ -54,25 +54,26 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
     f.read_to_string(&mut contents)?;
 
     for line in search(&config.query, &contents) {
-        "Program".chars().position(|c| c == 'g').unwrap();
-        let v: Vec<&str> = line.split(&config.query).collect();
-        for word in v{
-            if word == ""{
+        println!("{:?}", line.1);
+        let v: Vec<&str> = line.1.split(&config.query).collect();
+        print!("{0}:  ", line.0.to_string().trim().green());
+        for word in v {
+            if word == "" {
                 print!("{}", &config.query.bold().red());
-            }else{
+            } else {
                 print!("{}", word);
             }
         }
         print!("\n");
-        //println!("{}", line);
     }
 
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<(usize, &'a str)> {
     contents
         .lines()
-        .filter(|line| line.contains(query))
+        .enumerate()
+        .filter(|&(_, line)| line.contains(query))
         .collect()
 }
