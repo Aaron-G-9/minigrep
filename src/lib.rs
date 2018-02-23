@@ -55,12 +55,12 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
 
     for line in search(&config.query, &contents) {
         let v: Vec<&str> = line.1.split(&config.query).collect();
-        print!("{0}: ", line.0.to_string().trim().green());
+        print!("{0}: ", (line.0 + 1).to_string().trim().green());
 
         for (i, word) in v.iter().enumerate() {
-            if i < v.len() - 1{
+            if i < v.len() - 1 {
                 print!("{0}{1}", word, &config.query.bold().red());
-            }else{
+            } else {
                 print!("{}", word);
             }
         }
